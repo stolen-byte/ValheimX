@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+		<AssemblyName>$(MSBuildProjectName.ToLowerInvariant())</AssemblyName>
+		<Product>$(Product) Configuration Tool</Product>
+		<!--
+			This tool has no access to the tasks which provide versioning,
+			so we disable these to prevent spurious version numbers.
+		-->
+		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+		<GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+  </PropertyGroup>
+
+	<ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer" />
+    <PackageReference Include="Microsoft.Build" ExcludeAssets="Runtime" />
+    <PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="Runtime" />
+    <PackageReference Include="Microsoft.Build.Locator" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="System.CommandLine" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Update="@(PackageReference)" PrivateAssets="All" />
+	</ItemGroup>
+
+</Project>

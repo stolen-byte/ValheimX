@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+		<DevelopmentDependency>true</DevelopmentDependency>
+		<IsRoslynComponent>true</IsRoslynComponent>
+		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+		<NoWarn>RS2008</NoWarn>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Using Include="System.Collections.Immutable" />
+		<Using Include="System.Collections.Concurrent" />
+		<Using Include="Microsoft.CodeAnalysis" />
+		<Using Include="Microsoft.CodeAnalysis.CSharp" />
+		<Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
+		<Using Include="Microsoft.CodeAnalysis.Diagnostics" />
+		<Using Include="Microsoft.CodeAnalysis.Text" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ToolsRoot)\Tasks\Tasks.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+	<ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.HashCode" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" IncludeAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+    <PackageReference Include="PolySharp" IncludeAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Update="@(PackageReference)" PrivateAssets="All" />
+	</ItemGroup>
+
+</Project>

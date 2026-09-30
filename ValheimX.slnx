@@ -1,0 +1,26 @@
+<Solution>
+	<Folder Name="/files/">
+		<File Path=".editorconfig" />
+		<File Path=".gitattributes" />
+		<File Path=".gitignore" />
+		<File Path="Directory.Build.props" />
+		<File Path="Directory.Build.targets" />
+		<File Path="Directory.Build.rsp" />
+		<File Path="Directory.Packages.props" />
+		<File Path="global.json" />
+		<File Path="FodyWeavers.xml" />
+		<File Path="CHANGES.md" />
+		<File Path="README.md" />
+	</Folder>
+	<Folder Name="/tools/">
+		<File Path="Generators.targets" />
+		<File Path="References.targets" />
+		<File Path="Version.targets" />
+		<Project Path="tools/Tasks/Tasks.csproj" />
+		<!--<Project Path="tools/configure/Configure.csproj" />-->
+	</Folder>
+	<Folder Name="/src/">
+		<Project Path="src/Generators/Generators.csproj" />
+		<Project Path="src/Mod/ValheimX.csproj" />
+	</Folder>
+</Solution>

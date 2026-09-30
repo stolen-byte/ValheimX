@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<Project>
+
+	<PropertyGroup>
+		<NoConfig>true</NoConfig>
+		<NoStdLib>true</NoStdLib>
+		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+		<AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+		<ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
+		<ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
+		<AutomaticallyUseReferenceAssemblyPackages>false</AutomaticallyUseReferenceAssemblyPackages>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<RefAssembliesDir>$(BuildRoot)/refs</RefAssembliesDir>
+		<GameAssembliesRelativeDir>valheim_Data/Managed</GameAssembliesRelativeDir>
+		<GameAssembliesDir>$(GameDir)/$(GameAssembliesRelativeDir)</GameAssembliesDir>
+		<BepInExAssembliesDir>$(GameDir)/BepInEx/core</BepInExAssembliesDir>
+		<FrameworkPathOverride>$(GameAssembliesDir)</FrameworkPathOverride>
+	</PropertyGroup>
+
+	<ItemGroup Label="Unity">
+		<UnityAssemblies Include="$(GameAssembliesDir)/mscorlib.dll" />
+		<UnityAssemblies Include="$(GameAssembliesDir)/netstandard.dll" />
+		<UnityAssemblies Include="$(GameAssembliesDir)/System*.dll" />
+		<UnityAssemblies Include="$(GameAssembliesDir)/UnityEngine*.dll" />
+		<UnityAssemblies Include="$(GameAssembliesDir)/Unity*.dll" />
+		<UnityAssemblies Include="$(GameAssembliesDir)/SoftReferenceableAssets.dll" />
+	</ItemGroup>
+
+	<ItemGroup Label="BepInEx/Harmony">
+		<ModRefAssemblies Include="$(BepInExAssembliesDir)/0Harmony.dll" />
+		<ModRefAssemblies Include="$(BepInExAssembliesDir)/BepInEx.dll" />
+		<ModRefAssemblies Include="$(BepInExAssembliesDir)/Mono.Cecil.dll" />
+		<ModRefAssemblies Include="$(BepInExAssembliesDir)/MonoMod.RuntimeDetour.dll" />
+		<ModRefAssemblies Include="$(BepInExAssembliesDir)/MonoMod.Utils.dll" />
+	</ItemGroup>
+
+	<ItemGroup Label="Game">
+		<GameAssemblies Include="assembly_valheim.dll" />
+		<GameAssemblies Include="assembly_utils.dll" />
+		<GameAssemblies Include="assembly_guiutils.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="BepInEx" />
+		<Using Include="BepInEx.Configuration" />
+		<Using Include="HarmonyLib" />
+		<Using Include="UnityEngine" />
+	</ItemGroup>
+
+	<Target Name="AddGameFrameworkReferences" BeforeTargets="ResolveAssemblyReferences">
+		<ItemGroup>
+			<Reference Include="%(UnityAssemblies.Filename)" HintPath="%(UnityAssemblies.FullPath)" Private="false" />
+			<Reference Include="%(ModRefAssemblies.Filename)" HintPath="%(ModRefAssemblies.FullPath)" Private="false" />
+			<Reference Include="%(GameAssemblies.Filename)" HintPath="$(RefAssembliesDir)/%(Filename)%(Extension)" Private="false" />
+
+			<!-- Dll Hell v2.0 -->
+			<Reference Remove="System.Net.Http" />
+			<Reference Remove="System.IO.Compression" />
+		</ItemGroup>
+	</Target>
+
+</Project>

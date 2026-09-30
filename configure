@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -e
+
+# ==============================================================================
+dotnet run --project tools/Configure -c Release -- "$@"

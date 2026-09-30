@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<Project>
+
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+		<WarningLevel>4</WarningLevel>
+		<Prefer32Bit>false</Prefer32Bit>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Product>ValheimX</Product>
+		<Version>0.1.0</Version>
+		<VersionExport>$Format:%(describe:abbrev=7,tags=true)$</VersionExport>
+		<Author>StolenByte</Author>
+		<Authors>$(Author)</Authors>
+		<Copyright>Copyright (c)$([System.DateTime]::UtcNow.Year) $(Authors)</Copyright>
+		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<ProjectRoot>$(MSBuildThisFileDirectory)</ProjectRoot>
+		<ProjectRelativeDir>$([MSBuild]::MakeRelative('$(ProjectRoot)', '$(MSBuildProjectDirectory)'))</ProjectRelativeDir>
+		<ToolsRoot>$(ProjectRoot)tools</ToolsRoot>
+		<BuildRoot>$(ProjectRoot)build</BuildRoot>
+		<UseArtifactsOutput>true</UseArtifactsOutput>
+		<ArtifactsPath>$(BuildRoot)</ArtifactsPath>
+		<BuildPropsFile>$(BuildRoot)/Build.props</BuildPropsFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<BaseNamespace>$(Author).$(Product)</BaseNamespace>
+		<RootNamespace>$(BaseNamespace).$(MSBuildProjectName)</RootNamespace>
+		<RootNamespace Condition="'$(MSBuildProjectName)' == '$(Product)'">$(BaseNamespace)</RootNamespace>
+		<AssemblyName Condition="'$(MSBuildProjectName)' == '$(Product)'">$(BaseNamespace)</AssemblyName>
+		<AssemblyName Condition="'$(MSBuildProjectName)' != '$(Product)'">$(BaseNamespace).$(MSBuildProjectName)</AssemblyName>
+	</PropertyGroup>
+
+	<!-- Keep conditional so we can use msbuild to evaluate props -->
+	<Import Project="$(BuildPropsFile)" Condition="Exists('$(BuildPropsFile)')" />
+
+</Project>

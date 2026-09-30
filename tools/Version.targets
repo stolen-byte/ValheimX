@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<Project>
+
+	<PropertyGroup>
+		<TasksAssemblyName>$(BaseNamespace).Tasks</TasksAssemblyName>
+		<TasksAssemblyPath>$(BuildRoot)/bin/Tasks/$(ArtifactsPivots)/$(TasksAssemblyName).dll</TasksAssemblyPath>
+	</PropertyGroup>
+
+  <UsingTask TaskName="$(TasksAssemblyName).GitVersion" AssemblyFile="$(TasksAssemblyPath)" />
+
+  <Target Name="SetVersionFromGit"
+  	BeforeTargets="GetAssemblyVersion"
+   	Condition="('$(DesignTimeBuild)' != 'true') And Exists('$(TasksAssemblyPath)')"
+  >
+  	<GitVersion WorkingDirectory="$(ProjectRoot)" ExportOverride="$(VersionExport)">
+   		<Output TaskParameter="Version" PropertyName="Version" />
+   		<Output TaskParameter="VersionFull" PropertyName="VersionFull" />
+   	</GitVersion>
+
+    <PropertyGroup>
+    	<AssemblyVersion>$(Version)</AssemblyVersion>
+    	<InformationalVersion>$(VersionFull)</InformationalVersion>
+    </PropertyGroup>
+  </Target>
+
+</Project>

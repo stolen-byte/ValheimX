@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<Project>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Using Include="System.Collections" />
+		<Using Include="System.Collections.ObjectModel" />
+		<Using Include="System.Diagnostics.CodeAnalysis" />
+		<Using Include="System.Globalization" />
+		<Using Include="System.Runtime.CompilerServices" />
+		<Using Include="System.Text" />
+	</ItemGroup>
+
+	<Import Project="$(ToolsRoot)/Version.targets" Condition="!$(ProjectRelativeDir.StartsWith('tools/'))" />
+
+	<Target Name="CheckBuildProps" Condition="!$(ProjectRelativeDir.StartsWith('tools/'))">
+		<Error Condition="!Exists('$(BuildPropsFile)')" Text="$(BuildPropsFile) does not exist, please configure the build first." />
+	</Target>
+
+	<PropertyGroup>
+		<BuildDependsOn>CheckBuildProps;$(BuildDependsOn)</BuildDependsOn>
+	</PropertyGroup>
+
+</Project>
