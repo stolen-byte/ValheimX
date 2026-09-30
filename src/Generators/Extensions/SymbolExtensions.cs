@@ -8,7 +8,43 @@ static class SymbolExtensions
 	public static string? DisplayName(this INamespaceSymbol sym)
 		=> !sym.IsGlobalNamespace ? sym.ToDisplayString() : null;
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static INamedTypeSymbol GetTypeByName(this SemanticModel sm, string fqn)
-		=> sm.Compilation.GetTypeByMetadataName(fqn) ?? throw new InvalidOperationException($"Unable to find type {fqn}");
+	public static ITypeSymbol? GetMemberType(this ISymbol symbol)
+	{
+		return symbol switch {
+			IPropertySymbol prop => prop.Type,
+			IFieldSymbol field => field.Type,
+			_ => null,
+		};
+	}
+
+	public static bool IsReadOnly(this ISymbol symbol)
+	{
+		return symbol switch {
+			IPropertySymbol prop => prop.IsReadOnly,
+			IFieldSymbol field => field.IsReadOnly,
+			_ => false,
+		};
+	}
+
+	public static bool IsNumeric(this ITypeSymbol type)
+	{
+		if (type.IsNativeIntegerType)
+			return true;
+
+		return type.IsValueType && type.SpecialType switch {
+			SpecialType.System_Byte or SpecialType.System_SByte => true,
+			SpecialType.System_Int16 or SpecialType.System_Int32 or SpecialType.System_Int64 => true,
+			SpecialType.System_UInt16 or SpecialType.System_UInt32 or SpecialType.System_UInt64 => true,
+			SpecialType.System_Single or SpecialType.System_Double => true,
+			_ => false,
+		};
+	}
+
+	public static string ToCode(this TypedConstant value)
+	{
+		var result = value.ToCSharpString();
+		if (value.Type?.SpecialType == SpecialType.System_Single)
+			return result + "f";
+		return result;
+	}
 }

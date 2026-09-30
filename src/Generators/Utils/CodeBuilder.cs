@@ -326,6 +326,38 @@ internal class CodeBuilder
 		return this;
 	}
 
+	public CodeBuilder IfNotNull<T>(ref readonly T? arg, GenerateAction<T> action, Action<CodeBuilder>? nullAction = null)
+		where T : struct
+	{
+		if (arg is T value)
+			action(this, in value);
+		else if (nullAction is not null)
+			nullAction(this);
+		return this;
+	}
+
+	public CodeBuilder IfNotNull<T>(T? arg, Action<CodeBuilder, T> action, Action<CodeBuilder>? nullAction = null)
+		where T : struct
+	{
+		if (arg is T value)
+			action(this, value);
+		else if (nullAction is not null)
+			nullAction(this);
+		return this;
+	}
+
+	// duplicated with different constraint because C# generics are stupid,
+	// and this is the only way we can get proper nullability typing on `action`s `T` parameter
+	public CodeBuilder IfNotNull<T>(T? arg, Action<CodeBuilder, T> action, Action<CodeBuilder>? nullAction = null)
+		where T : class
+	{
+		if (arg is not null)
+			action(this, arg);
+		else if (nullAction is not null)
+			nullAction(this);
+		return this;
+	}
+
 	public override string ToString()
 	{
 		var result = m_builder.ToString();

@@ -8,4 +8,8 @@ static class GeneratorExtensions
 		=> cfg.GlobalOptions.TryGetValue($"build_property.{name}", out var result)
 				? result
 				: defaultValue;
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static INamedTypeSymbol GetTypeByName(this SemanticModel sm, string fqn)
+		=> sm.Compilation.GetTypeByMetadataName(fqn) ?? throw new InvalidOperationException($"Unable to find type {fqn}");
 }
