@@ -8,6 +8,7 @@ static class SymbolExtensions
 	public static string? DisplayName(this INamespaceSymbol sym)
 		=> !sym.IsGlobalNamespace ? sym.ToDisplayString() : null;
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static ITypeSymbol? GetMemberType(this ISymbol symbol)
 	{
 		return symbol switch {
@@ -17,6 +18,7 @@ static class SymbolExtensions
 		};
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsReadOnly(this ISymbol symbol)
 	{
 		return symbol switch {
@@ -39,6 +41,14 @@ static class SymbolExtensions
 			_ => false,
 		};
 	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool MatchesType(this SymbolEqualityComparer comparer, ITypeSymbol sym, Type type, SemanticModel sm)
+		=> comparer.Equals(sym, sm.GetSymbolForType(type));
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool MatchesType(this ITypeSymbol sym, Type type, SemanticModel sm)
+		=> SymbolEqualityComparer.Default.MatchesType(sym, type, sm);
 
 	public static string ToCode(this TypedConstant value)
 	{
