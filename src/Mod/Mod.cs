@@ -13,6 +13,7 @@ public sealed partial class Mod : BaseUnityPlugin
 	public void Awake()
 	{
 		Config.BindAll();
+		ItemPatcher.BindPatches(Config);
 		PatchAll();
 	}
 

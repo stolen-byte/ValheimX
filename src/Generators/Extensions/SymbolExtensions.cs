@@ -50,6 +50,10 @@ static class SymbolExtensions
 	public static bool MatchesType(this ITypeSymbol sym, Type type, SemanticModel sm)
 		=> SymbolEqualityComparer.Default.MatchesType(sym, type, sm);
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool HasErrors(this IEnumerable<TypedConstant> items)
+		=> items.Any(x => x.Kind == TypedConstantKind.Error);
+
 	public static string ToCode(this TypedConstant value)
 	{
 		var result = value.ToCSharpString();

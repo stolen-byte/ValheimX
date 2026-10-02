@@ -21,6 +21,7 @@ static class TypeNames
 		public const string BindConfigAttribute = $"{Namespace}.BindConfigAttribute";
 		public const string ConfigValueAttribute = $"{Namespace}.ConfigValueAttribute";
 		public const string ConfigManagerAttributes = $"{Namespace}.ConfigurationManagerAttributes";
+		public const string ItemPatchAttribute = $"{Namespace}.ItemPatchAttribute";
 	}
 
 	public static class Harmony
