@@ -5,6 +5,11 @@ namespace StolenByte.ValheimX;
 [Mod]
 public sealed partial class Mod : BaseUnityPlugin
 {
+	public Mod()
+	{
+		Log.Init(Logger);
+	}
+
 	public void Awake()
 	{
 		Config.BindAll();
@@ -14,5 +19,6 @@ public sealed partial class Mod : BaseUnityPlugin
 	public void OnDestroy()
 	{
 		Config.Save();
+		Log.Destroy();
 	}
 }
