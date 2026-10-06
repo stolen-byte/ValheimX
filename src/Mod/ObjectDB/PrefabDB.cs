@@ -15,6 +15,9 @@ public static class PrefabDB
 
 	public static event EventHandler<UpdateEventArgs>? Updated;
 
+	public static IEnumerable<Recipe> Recipes => m_recipes.Values;
+	public static IEnumerable<PieceTable> PieceTables => m_pieceTables.Values;
+
 	public static GameObject? GetPrefab(int hash)
 		=> GetPrefabFrom(ZNetScene.instance?.m_namedPrefabs, hash)
 				?? GetPrefabFrom(ObjectDB.instance?.m_itemByHash, hash);
