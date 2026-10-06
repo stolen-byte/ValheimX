@@ -7,6 +7,9 @@ internal class CodeBuilder
 	internal delegate void GenerateAction<T>(CodeBuilder builder, ref readonly T item)
 		where T : struct;
 
+	internal delegate void GenerateActionI<T>(CodeBuilder builder, int index, ref readonly T item)
+		where T : struct;
+
 	private readonly StringBuilder m_builder;
 	private int m_indentLevel;
 	private string[] m_indent;
@@ -76,6 +79,10 @@ internal class CodeBuilder
 		=> BeginLine().Append(text);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public CodeBuilder BeginLineF(string format, params object[] args)
+		=> BeginLine().AppendFormat(format, args);
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public CodeBuilder EndLine()
 		=> AppendNewLine();
 
@@ -102,6 +109,10 @@ internal class CodeBuilder
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public CodeBuilder BeginStatement(string text)
 		=> BeginLine(text);
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public CodeBuilder BeginStatementF(string format, params object[] args)
+		=> BeginLineF(format, args);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public CodeBuilder EndStatement()
@@ -317,11 +328,32 @@ internal class CodeBuilder
 		return this;
 	}
 
+	public CodeBuilder For<T>(IEnumerable<T> items, Action<CodeBuilder, int, T> action)
+	{
+		int index = 0;
+		foreach (var arg in items) {
+			action(this, index, arg);
+			++index;
+		}
+		return this;
+	}
+
 	public CodeBuilder For<T>(ReadOnlySpan<T> items, GenerateAction<T> action)
 		where T : struct
 	{
 		foreach (ref readonly var item in items) {
 			action(this, in item);
+		}
+		return this;
+	}
+
+	public CodeBuilder For<T>(ReadOnlySpan<T> items, GenerateActionI<T> action)
+		where T : struct
+	{
+		int index = 0;
+		foreach (ref readonly var item in items) {
+			action(this, index, in item);
+			index++;
 		}
 		return this;
 	}

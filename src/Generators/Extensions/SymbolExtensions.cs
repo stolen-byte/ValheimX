@@ -42,6 +42,21 @@ static class SymbolExtensions
 		};
 	}
 
+	public static bool IsBuiltinType(this INamedTypeSymbol type)
+	{
+		if (type.IsGenericType && type.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T) {
+			if (type.TypeArguments is { Length: 1 } tArgs) {
+				type = (INamedTypeSymbol)tArgs[0];
+			} else {
+				return false;
+			}
+		}
+		return type.SpecialType != SpecialType.None;
+	}
+
+	public static bool IsNullable(this ITypeSymbol type)
+		=> type.NullableAnnotation == NullableAnnotation.Annotated;
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool MatchesType(this SymbolEqualityComparer comparer, ITypeSymbol sym, Type type, SemanticModel sm)
 		=> comparer.Equals(sym, sm.GetSymbolForType(type));

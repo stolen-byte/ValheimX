@@ -7,6 +7,19 @@ static class StringExtensions
 	public static string Quoted(this string s)
 		=> $"\"{s}\"";
 
+	public static string Unquote(this string s)
+	{
+		if (s.Length >= 2) {
+			int i = s[0] == '"' ? 1 : 0;
+			int j = s.EndsWith("\"") ? s.Length - 1 : s.Length;
+			s = s[i..j];
+		}
+		return s;
+	}
+
+	public static string AsString(this bool b)
+		=> b ? "true" : "false";
+
 	public static bool IsEmpty(this string s)
 		=> s.AsSpan().Trim().IsEmpty;
 

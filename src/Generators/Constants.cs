@@ -22,6 +22,7 @@ static class TypeNames
 		public const string ConfigValueAttribute = $"{Namespace}.ConfigValueAttribute";
 		public const string ConfigManagerAttributes = $"{Namespace}.ConfigurationManagerAttributes";
 		public const string ItemPatchAttribute = $"{Namespace}.ItemPatchAttribute";
+		public const string ConsoleCommandAttribute = $"{Namespace}.ConsoleCommandAttribute";
 	}
 
 	public static class Harmony
@@ -31,14 +32,20 @@ static class TypeNames
 		public const string PatchAttribute = $"{Namespace}.HarmonyPatch";
 	}
 
-		public static class BepIn
-		{
-			public const string Namespace = "BepInEx";
-			public const string ConfigNamespace = $"{Namespace}.Configuration";
+	public static class BepIn
+	{
+		public const string Namespace = "BepInEx";
+		public const string ConfigNamespace = $"{Namespace}.Configuration";
 
-			public const string ConfigEntry = $"{ConfigNamespace}.ConfigEntry`1";
-			public const string ConfigFile = $"{ConfigNamespace}.ConfigFile";
-			public const string ConfigDescription = $"{ConfigNamespace}.ConfigDescription";
-			public const string AcceptableValueRange = $"{ConfigNamespace}.AcceptableValueRange";
-		}
+		public const string ConfigEntry = $"{ConfigNamespace}.ConfigEntry`1";
+		public const string ConfigFile = $"{ConfigNamespace}.ConfigFile";
+		public const string ConfigDescription = $"{ConfigNamespace}.ConfigDescription";
+		public const string AcceptableValueRange = $"{ConfigNamespace}.AcceptableValueRange";
+	}
+
+	public static class Valheim
+	{
+		public const string ConsoleCommand = "Terminal.ConsoleCommand";
+		public const string ConsoleEventArgs = "Terminal.ConsoleEventArgs";
+	}
 }

@@ -10,6 +10,12 @@ static class GeneratorExtensions
 				: defaultValue;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static void ReportDiagnostics(
+		this IncrementalGeneratorInitializationContext ctx,
+		IncrementalValuesProvider<EquatableArray<Diagnostic>> diagnostics)
+		=> ctx.RegisterSourceOutput(diagnostics, static (ctx, diag) => diag.ReportAll(ctx));
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static INamedTypeSymbol GetTypeByName(this SemanticModel sm, string fqn)
 		=> sm.Compilation.GetTypeByMetadataName(fqn) ?? throw new InvalidOperationException($"Unable to find type {fqn}");
 
