@@ -1,3 +1,8 @@
+# Changes
+
+## Gameplay
+
+- Prevents `Game.isModded` flag from disabling achievements.
 
 # Commands
 

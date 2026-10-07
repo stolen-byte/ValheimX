@@ -34,4 +34,15 @@ public static class ILContextExtensions
 	public static ILCursor EmitBrFalse<T>(this ILCursor cursor, ILLabel label, T cb)
 		where T : Delegate
 		=> cursor.EmitFunc(cb).Emit(OpCodes.Brfalse_S, label);
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static void ApplyPatch(this ILContext ctx, string name, Action<ILContext, ILCursor> patch)
+	{
+		try {
+			var cursor = new ILCursor(ctx);
+			patch(ctx, cursor);
+		} catch (Exception ex) {
+			Log.Error($"{name}: {ex.Message}");
+		}
+	}
 }
