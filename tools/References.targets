@@ -47,6 +47,9 @@
 		<Using Include="BepInEx" />
 		<Using Include="BepInEx.Configuration" />
 		<Using Include="HarmonyLib" />
+		<Using Include="Mono.Cecil" />
+		<Using Include="Mono.Cecil.Cil" />
+		<Using Include="MonoMod.Cil" />
 		<Using Include="UnityEngine" />
 	</ItemGroup>
 

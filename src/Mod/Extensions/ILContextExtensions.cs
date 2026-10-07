@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace StolenByte.ValheimX;
 
-using Mono.Cecil;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-
 // =============================================================================
 public static class ILContextExtensions
 {
