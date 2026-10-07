@@ -5,6 +5,10 @@
 - Prevent `Game.isModded` flag from disabling achievements.
 - Removed 100hp cap on fall damage.
 
+## Combat
+
+- Removed damage penalty when attacking multiple targets.
+
 # Commands
 
 - `printenv` - Print current biome/environment information
