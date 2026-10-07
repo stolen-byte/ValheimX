@@ -27,3 +27,9 @@
   that cannot swim (ie: does not have a swimming animation, and walks along the sea floor).
   This (imo) is technically incorrect, and `InLiquidSwimDepth` is more appropriate/correct.
   This change allows weapon/attack checks which use `SharedData.m_aiWhenSwiming` to work correctly.
+
+- Fixed dupe glitch with placeable stones, when resource modifier is > 1.
+
+  Previously: the placeable stone only costs 1 stone, but when picked up could give 2+ back, resulting in
+  basically an infinite stone source, this removes that by disabling drop-scaling for the pickup.
+  (Doesn't affect regular stone pickups found in the wild).
