@@ -18,3 +18,12 @@
 	- `printnetobj`
 	- `printlocations`
 	- `biomeinfo`
+
+# Fixes
+
+- Fix `Character.IsSwimming` call in `BaseAI.CanUseAttack` to use `Character.InLiquidSwimDepth` instead.
+
+  Reasoning: `IsSwimming` is used to determine if the character is underwater, however it returns false for any mob
+  that cannot swim (ie: does not have a swimming animation, and walks along the sea floor).
+  This (imo) is technically incorrect, and `InLiquidSwimDepth` is more appropriate/correct.
+  This change allows weapon/attack checks which use `SharedData.m_aiWhenSwiming` to work correctly.
