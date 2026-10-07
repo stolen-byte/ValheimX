@@ -23,6 +23,7 @@ static class TypeNames
 		public const string ConfigManagerAttributes = $"{Namespace}.ConfigurationManagerAttributes";
 		public const string ItemPatchAttribute = $"{Namespace}.ItemPatchAttribute";
 		public const string ConsoleCommandAttribute = $"{Namespace}.ConsoleCommandAttribute";
+		public const string StaticInitAttribute = $"{Namespace}.StaticInitAttribute";
 	}
 
 	public static class Harmony

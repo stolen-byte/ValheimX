@@ -14,6 +14,7 @@ public sealed partial class Mod : BaseUnityPlugin
 	{
 		Config.BindAll();
 		ItemPatcher.BindPatches(Config);
+		StaticInit.InitAll(Logger);
 		PatchAll();
 	}
 
