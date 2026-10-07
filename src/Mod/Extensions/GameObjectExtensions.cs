@@ -16,6 +16,14 @@ public static class GameObjectExtensions
 		}
 	}
 
+	public static T GetOrAddComponent<T>(this GameObject obj)
+		where T : notnull, Component
+	{
+		if (obj.TryGetComponent<T>(out var comp))
+			return comp;
+		return obj.AddComponent<T>();
+	}
+
 	/// <summary>
 	/// Properly destroys an in-game object, using either its <see cref="Destructible"/> component,
 	/// or <see cref="ZNetScene"/>

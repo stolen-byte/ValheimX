@@ -9,6 +9,10 @@
 
 - Removed damage penalty when attacking multiple targets.
 
+## Exploration
+
+- Configurable wisp light radius.
+
 # Commands
 
 - `printenv` - Print current biome/environment information
