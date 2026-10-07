@@ -1,0 +1,4 @@
+0x75684182  1969766786 _CultivatorPieceTable
+0x6095fa05  1620441605 _FeasterPieceTable
+0x59b1fe35  1504837173 _HammerPieceTable
+0xeeea7f9d  -286621795 _HoePieceTable

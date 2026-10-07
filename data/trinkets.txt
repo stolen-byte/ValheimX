@@ -1,0 +1,15 @@
+0x1d47c54b   491242827 TrinketBlackDamageHealth
+0x7fdb6701  2145085185 TrinketBlackStamina
+0x74a406ad  1956906669 TrinketBloodGoldHealth
+0x36d74b82   920079234 TrinketBloodGoldStamina
+0x4a50e0cd  1246814413 TrinketBronzeHealth
+0xe35c9d7e  -480469634 TrinketBronzeStamina
+0x3022dc23   807590947 TrinketCarapaceEitr
+0x6b9149c8  1804683720 TrinketChitinSwim
+0x5f45636b  1598382955 TrinketFlametalEitr
+0x81d51e08 -2116739576 TrinketFlametalStaminaHealth
+0xa243ccfd -1572614915 TrinketIronHealth
+0x4fa4f78c  1336211340 TrinketIronStamina
+0x3c0f9d11  1007656209 TrinketScaleStaminaDamage
+0xbb1f86d7 -1155561769 TrinketSilverDamage
+0x287275d6   678589910 TrinketSilverResist

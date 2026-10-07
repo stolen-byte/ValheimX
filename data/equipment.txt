@@ -1,0 +1,10 @@
+0xbc9df331 -1130499279 Cultivator
+0xd02bed32  -802427598 Feaster
+0x0bf82ecc   200814284 Hammer
+0x598fda9a  1502599834 Hoe
+0x62eb5816  1659590678 Lantern
+0x2d27e2e7   757588711 Lantern_DN
+0xe9b702a8  -373882200 Lantern_hooded
+0x85dc3f96 -2049163370 Sparkler
+0x2f66f818   795277336 Torch
+0xd7f27e89  -671973751 TorchMist

@@ -1,0 +1,40 @@
+Meadows:
+  Clear [FogClouds]
+  Rain [GroundMist, Rain, FogClouds, OceanMist]
+  Misty [Mist]
+  ThunderStorm [Rain, GroundMist, FogClouds, OceanMist]
+  LightRain [GroundMist, LightRain, FogClouds]
+BlackForest:
+  DeepForest Mist [GroundMist, FogClouds]
+  Rain [GroundMist, Rain, FogClouds, OceanMist]
+  Misty [Mist]
+  ThunderStorm [Rain, GroundMist, FogClouds, OceanMist]
+Swamp:
+  SwampRain [LightRain, GroundMist]
+Mountain:
+  SnowStorm [SnowStorm]
+  Snow [Snow]
+Plains:
+  Heath clear []
+  Misty [Mist]
+  LightRain [GroundMist, LightRain, FogClouds]
+Ocean:
+  Rain [GroundMist, Rain, FogClouds, OceanMist]
+  LightRain [GroundMist, LightRain, FogClouds]
+  Misty [Mist]
+  Clear [FogClouds]
+  ThunderStorm [Rain, GroundMist, FogClouds, OceanMist]
+  Ashlands_SeaStorm []
+Mistlands:
+  Mistlands_clear [Mistlands]
+  Mistlands_rain [MistlandsRain, GroundMist]
+  Mistlands_thunder [MistlandsRain, MistlandsThunder, GroundMist]
+AshLands:
+  Ashlands_ashrain [Ashlands_AshRain]
+  Ashlands_misty [Ashlands_Misty]
+  Ashlands_CinderRain [Ashlands_CinderRain]
+  Ashlands_storm [Ashlands_storm, AshlandsThunder]
+DeepNorth:
+  Twilight_SnowStorm [SnowStorm]
+  Twilight_Snow [Snow]
+  Twilight_Clear [SlightSnow]
