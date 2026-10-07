@@ -2,7 +2,8 @@
 
 ## Gameplay
 
-- Prevents `Game.isModded` flag from disabling achievements.
+- Prevent `Game.isModded` flag from disabling achievements.
+- Removed 100hp cap on fall damage.
 
 # Commands
 
