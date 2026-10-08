@@ -17,6 +17,7 @@
 
 - Leather armour actually require leather, instead of bones.
 - Floor/Stair pieces count as roofs.
+- Allow building some structures inside dungeons.
 
 # Commands
 
