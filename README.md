@@ -12,13 +12,40 @@ crafting benches, and other "QoL" stuff like that (i think its lazy, and i don't
 Most changes are configurable either in-game (with [ConfigurationManager](https://github.com/BepInEx/BepInEx.ConfigurationManager))
 or in the config file `BepInEx/config/StolenByte.ValheimX.cfg`.
 
+## Requirements
+
+- [BepInEx](https://github.com/BepInEx/BepInEx)
+
+> [!NOTE]
+> I do not use the valheim-specific version of BepInEx from the thunderstore, despite contrary belief, it is not
+> required at all (and is now actually a bad idea, since it explicitly sets the `IsModded` flag and disables
+> achievements). But if that is what you have, this mod explicitly removes that flag from achievement checks.
+
 ## Installation
 
-TODO
+This mod does not support any mod installers/managers, and never will.
+
+Just place `StolenByte.ValheimX.dll` in your `BepInEx/plugins` directory, and you're good to go!
 
 ## Building
 
-TODO
+Building from source requires the latest [dotnet sdk](https://dotnet.microsoft.com/en-us/download).
+
+To configure the build, and setup paths to the game/unity assemblies:
+
+    $ ./configure <path to valheim game directory>
+
+If you are not on linux, or are otherwise unable to run the linux shell script, then instead use:
+
+    $ dotnet run --project tools/Configure -c Release -- <path to valheim game directory>
+
+You can view the list of configure options script by passing `-h` or `--help`.
+
+Then to build:
+
+    $ dotnet build -c Release
+
+the build `dll` will be in the `build/bin/ValheimX/release` directory.
 
 ## Changes
 
