@@ -45,4 +45,19 @@ public static class ILContextExtensions
 			Log.Error($"{name}: {ex.Message}");
 		}
 	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static void ApplyPatch(
+		this ILContext ctx,
+		MethodBase original,
+		string name,
+		Action<ILContext, MethodBase, ILCursor> patch)
+	{
+		try {
+			var cursor = new ILCursor(ctx);
+			patch(ctx, original, cursor);
+		} catch (Exception ex) {
+			Log.Error($"{name}: {ex.Message}");
+		}
+	}
 }
