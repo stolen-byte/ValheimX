@@ -16,6 +16,7 @@
 ## Building/Crafting
 
 - Leather armour actually require leather, instead of bones.
+- Floor/Stair pieces count as roofs.
 
 # Commands
 
