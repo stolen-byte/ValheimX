@@ -67,7 +67,7 @@ public abstract class ItemPatch<T> : IItemPatch
 	internal ItemPatch<T> Configure(ConfigFile cfg, string? section, string key, string description)
 	{
 		m_enabled = cfg.Bind(section ?? Name, key, true, description);
-		m_enabled.SettingChanged += OnEnabledChanged;
+		m_enabled.SettingChanged += EnabledChanged;
 		return this;
 	}
 
@@ -78,6 +78,9 @@ public abstract class ItemPatch<T> : IItemPatch
 	protected abstract void Remove(T item);
 	protected abstract IEnumerable<T> GetItems();
 
+	protected virtual void OnEnabledChanged(bool enabled)
+	{ }
+
 	ImmutableArray<T> LoadItems()
 	{
 		var result = new List<T>();
@@ -87,12 +90,13 @@ public abstract class ItemPatch<T> : IItemPatch
 		return result.ToImmutableArray();
 	}
 
-	void OnEnabledChanged(object _, EventArgs __)
+	void EnabledChanged(object _, EventArgs __)
 	{
 		if (m_enabled.Value) {
 			Apply();
 		} else {
 			Remove();
 		}
+		OnEnabledChanged(m_enabled.Value);
 	}
 }
