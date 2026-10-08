@@ -13,6 +13,10 @@
 
 - Configurable wisp light radius.
 
+## Building/Crafting
+
+- Leather armour actually require leather, instead of bones.
+
 # Commands
 
 - `printenv` - Print current biome/environment information
@@ -21,12 +25,12 @@
 
 - Remove `IsCheat` flag from some debug commands:
 
-	- `dpsdebug`
-	- `listkeys`
-	- `printcreatures`
-	- `printnetobj`
-	- `printlocations`
-	- `biomeinfo`
+  - `dpsdebug`
+  - `listkeys`
+  - `printcreatures`
+  - `printnetobj`
+  - `printlocations`
+  - `biomeinfo`
 
 # Fixes
 
