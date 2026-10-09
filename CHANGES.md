@@ -20,6 +20,7 @@
 - Leather armour actually require leather, instead of bones.
 - Floor/Stair pieces count as roofs.
 - Allow building some structures inside dungeons.
+- Crafting station build ranges daisy-chain from each other.
 
 # Commands
 

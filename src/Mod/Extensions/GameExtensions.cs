@@ -48,4 +48,10 @@ public static class GameExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool HasItemEquipped(this Player player, string name)
 		=> GetEquippedItem(player, name.GetStableHashCode()) is not null;
+
+	public static bool IsInBuildRange(this CraftingStation station, Vector3 pos)
+	{
+		pos.y = station.transform.position.y; // disregard y pos
+		return Vector3.Distance(station.transform.position, pos) < station.GetStationBuildRange();
+	}
 }
