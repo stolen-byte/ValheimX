@@ -7,15 +7,6 @@ public sealed class ModGenerator : IIncrementalGenerator
 {
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
-		var info = context.AnalyzerConfigOptionsProvider.Select(
-			static (config, _) => new ModInfo(
-				config.GetBuildProp(BuildProps.ModName, string.Empty)!,
-				config.GetBuildProp(BuildProps.ModVersion, string.Empty)!,
-				config.GetBuildProp(BuildProps.ModAuthor, string.Empty)!,
-				config.GetBuildProp(BuildProps.ModGUID, string.Empty)!
-			)
-		);
-
 		var patches = context.SyntaxProvider
 			.ForAttributeWithMetadataName(
 				TypeNames.Harmony.PatchAttribute,
@@ -33,9 +24,9 @@ public sealed class ModGenerator : IIncrementalGenerator
 			.NonNull();
 
 		context.RegisterSourceOutput(
-			info.Combine(patches.Collect()).Combine(targets.Collect()),
+			patches.Collect().Combine(targets.Collect()),
 			static (ctx, data) => {
-				var ((mod, patches), targets) = data;
+				var (patches, targets) = data;
 
 				if (targets.Length > 1) {
 					ctx.ReportDiagnostic(Diagnostics.MultipleModsDefined(targets[1].Location).ToRoslynDiagnostic());
@@ -44,7 +35,7 @@ public sealed class ModGenerator : IIncrementalGenerator
 				}
 
 				ref readonly var target = ref targets.AsSpan()[0];
-				GenerateModExtension(ctx, in mod, in target, patches);
+				GenerateModExtension(ctx, in target, patches);
 			}
 		);
 	}
@@ -67,7 +58,6 @@ public sealed class ModGenerator : IIncrementalGenerator
 
 	static void GenerateModExtension(
 		SourceProductionContext ctx,
-		ref readonly ModInfo mod,
 		ref readonly ModTarget target,
 		ImmutableArray<ClassRef> patches)
 	{
@@ -84,11 +74,6 @@ public sealed class ModGenerator : IIncrementalGenerator
 			.Line("[BepInPlugin(GUID, Name, Version)]")
 			.BeginClass(target.Type.Visibility, target.Type.Name, isPartial: true)
 				.Property(Accessibility.Private, "Harmony", "Harmony", write: false, value: "new(GUID)")
-				.Line()
-				.Field(Accessibility.Public, "string", "Name", isConst: true, value: mod.Name.Quoted())
-				.Field(Accessibility.Public, "string", "Version", isConst: true, value: mod.Version.Quoted())
-				.Field(Accessibility.Public, "string", "Author", isConst: true, value: mod.Author.Quoted())
-				.Field(Accessibility.Public, "string", "GUID", isConst: true, value: mod.GUID.Quoted())
 				.Line()
 				.With(in target, static (builder, ref readonly target) => {
 					builder.BeginStatement("public static Assembly Assembly { get; } = typeof(global::");

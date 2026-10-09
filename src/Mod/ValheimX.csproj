@@ -21,7 +21,7 @@
     <PackageReference Include="PolySharp" IncludeAssets="all" PrivateAssets="All" />
   </ItemGroup>
 
-  <Import Project="$(ToolsRoot)/Generators.targets" />
   <Import Project="$(ToolsRoot)/References.targets" />
+  <Import Project="$(ToolsRoot)/Mod.targets" />
 
 </Project>

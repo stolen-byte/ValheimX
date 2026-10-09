@@ -19,6 +19,7 @@
    	</GitVersion>
 
     <PropertyGroup>
+    	<ModVersion>$(Version)</ModVersion>
     	<AssemblyVersion>$(Version)</AssemblyVersion>
     	<InformationalVersion>$(VersionFull)</InformationalVersion>
     </PropertyGroup>
