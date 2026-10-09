@@ -39,13 +39,13 @@ If you are not on linux, or are otherwise unable to run the linux shell script, 
 
     $ dotnet run --project tools/Configure -c Release -- <path to valheim game directory>
 
-You can view the list of configure options script by passing `-h` or `--help`.
+You can view the list of configure script options by passing `-h` or `--help`.
 
 Then to build:
 
     $ dotnet build -c Release
 
-the build `dll` will be in the `build/bin/ValheimX/release` directory.
+the built `dll` will be in the `build/bin/ValheimX/release` directory.
 
 ## Changes
 
