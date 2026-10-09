@@ -20,3 +20,15 @@ public sealed class ObjectComparer : IEqualityComparer<Object>
 	public int GetHashCode(Object obj)
 		=> obj.name.GetStableHashCodeBase();
 }
+
+// =============================================================================
+public sealed class ObjectNameComparer : IEqualityComparer<string>
+{
+	public static ObjectNameComparer Default = new();
+
+	public bool Equals(string x, string y)
+		=> string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
+
+	public int GetHashCode(string name)
+		=> name.GetStableHashCode();
+}

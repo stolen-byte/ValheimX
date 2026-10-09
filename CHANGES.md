@@ -13,6 +13,7 @@
 ## Exploration
 
 - Configurable wisp light radius.
+- Dynamic minimap exploration radius, based on altitude/weather/lighting/biome.
 
 ## Building/Crafting
 

@@ -4,7 +4,7 @@ namespace StolenByte.ValheimX;
 using Object = UnityEngine.Object;
 
 // =============================================================================
-public static class GameObjectExtensions
+public static class UnityExtensions
 {
 	public static IEnumerable<T> AsComponents<T>(this IEnumerable<GameObject> objects)
 		where T : notnull, Component
@@ -40,4 +40,9 @@ public static class GameObjectExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static int GetNameHash(this Object obj)
 		=> HashHelper.GetBaseHashCode(obj.name);
+
+	public static float Magnitude(this Color color)
+	{
+		return Mathf.Sqrt(color.r * color.r + color.g * color.g + color.b * color.b);
+	}
 }
