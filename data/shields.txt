@@ -1,0 +1,19 @@
+0xc2c4f403 -1027279869 Axe1h_JotunWarrior 1
+0xe723020d  -417136115 ShieldBlackmetal
+0xb37daf7a -1283608710 ShieldBlackmetalTower
+0x171a02ca   387580618 ShieldBoneTower
+0x81652cd9 -2124075815 ShieldCarapace
+0xab981b4d -1416094899 ShieldCarapaceBuckler
+0x69e646f9  1776699129 ShieldFlametal
+0x4d6b8d9c  1298894236 ShieldFlametalTower
+0x35863cdb   897989851 ShieldGold
+0x8fd96593 -1881578093 ShieldGoldBuckler
+0x6831a2ea  1748083434 ShieldGoldTower
+0x9a6d9ce1 -1704092447 ShieldIronBuckler
+0xfc0a655a   -66427558 ShieldIronSquare
+0x5f829006  1602392070 ShieldIronTower
+0x97ce14ae -1748101970 ShieldKnight
+0xc501ef70  -989728912 ShieldRoots
+0xeb7db62c  -344082900 ShieldSerpentscale
+0xb596c80e -1248409586 ShieldSilver
+0x6710329b  1729114779 ShieldWoodTower

@@ -51,6 +51,7 @@
 		<Using Include="Mono.Cecil.Cil" />
 		<Using Include="MonoMod.Cil" />
 		<Using Include="UnityEngine" />
+		<Using Include="UnityEngine.UI" />
 	</ItemGroup>
 
 	<Target Name="AddGameFrameworkReferences" BeforeTargets="ResolveAssemblyReferences">

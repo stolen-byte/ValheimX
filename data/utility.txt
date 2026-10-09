@@ -1,14 +1,6 @@
 0xe4873162  -460902046 BeltStrength
 0x01666ca5    23489701 Demister
-0xd603ccab  -704394069 DvergerArbalest
-0x29d1a383   701604739 DvergerStaffFire
-0x65825007  1703038983 DvergerStaffHeal
-0x0175e50e    24503566 DvergerStaffIce
 0x7f1d72be  2132636350 DvergerStaffSupport
-0xc3042091 -1023139695 GoblinBrute_LegBones
-0x459d41aa  1167933866 GoblinShaman_Staff_Bones
-0xc11b0c21 -1055192031 GoblinShaman_Staff_Feathers
-0x21fa2cd9   570043609 GoblinShaman_Staff_Hildir
 0xb2af4b31 -1297134799 IceShoes
 0xd79c6cda  -677614374 IceSkates
 0x48b6d5d3  1219941843 Wishbone

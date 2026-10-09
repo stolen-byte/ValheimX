@@ -345,7 +345,6 @@
 0x09ddccbc   165530812 piece_table_runed_small
 0x2c555c3c   743791676 piece_throne01
 0x144bba0d   340507149 piece_throne02
-0xcc0e69a1  -871470687 piece_TrainingDummy
 0x4d2ca69a  1294771866 piece_trap_troll
 0xcf56c8c5  -816396091 piece_turret
 0x3ddfee55  1038085717 piece_walltorch
