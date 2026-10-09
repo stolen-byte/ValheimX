@@ -16,4 +16,14 @@ static class EnumerableExtensions
 			}
 		}
 	}
+
+	public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> source)
+	{
+		foreach (var item in source)
+			collection.Add(item);
+	}
+
+	public static IEnumerable<T> NonNull<T>(this IEnumerable<T?> enumerable)
+		where T : class
+		=> enumerable.Where(static (x) => x is not null)!;
 }
