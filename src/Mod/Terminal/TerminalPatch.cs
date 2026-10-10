@@ -22,6 +22,7 @@ static class TerminalPatch
 	static void InitTerminal()
 	{
 		if (!m_done) {
+			Terminal.commands.Remove("help"); // remove built-in help command so we don't trigger any exceptions.
 			FixCheats();
 			CommandBinder.RegisterCommands();
 			m_done = true;

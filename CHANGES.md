@@ -30,6 +30,8 @@
 - `printobjects` - List names of all objects within the given radius
 - `dumpobjects` - Dump all items/environments to the specified directory, each categorised in its own file
 
+- Replaced `help` command with a better version, which allows displaying only commands matching a given name.
+
 - Remove `IsCheat` flag from some debug commands:
 
   - `dpsdebug`
