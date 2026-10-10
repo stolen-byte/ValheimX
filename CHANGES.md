@@ -21,6 +21,8 @@
 - Floor/Stair pieces count as roofs.
 - Allow building some structures inside dungeons.
 - Crafting station build ranges daisy-chain from each other.
+- Cultivator now removes all non-plant pickables (branches/stones/dandelions etc).
+- Paving with the Hoe now removes all plants/pickables (including bushes).
 
 # Commands
 
