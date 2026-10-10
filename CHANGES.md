@@ -9,6 +9,7 @@
 ## Combat
 
 - Removed damage penalty when attacking multiple targets.
+- Disable enemy ranged attacks when underwater.
 
 ## Exploration
 

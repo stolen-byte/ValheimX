@@ -1,34 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace StolenByte.ValheimX;
 
+using ItemType = ItemDrop.ItemData.ItemType;
+using AttackType = Attack.AttackType;
+
 // =============================================================================
 [HarmonyPatch, BindConfig(ConfigSections.Gameplay)]
 static partial class EquipInWater
 {
-	static readonly Type ThisType = typeof(EquipInWater);
-
-	// non 2handed items we don't want usable underwater
-	static readonly ObjectSet m_blackList = new(
-		"BombBile",
-		"BombBlob_Frost",
-		"BombBlob_Lava",
-		"BombBlob_Morkhalla",
-		"BombBlob_Poison",
-		"BombBlob_PoisonElite",
-		"BombBlob_Tar",
-		"BombDynamite",
-		"BombLava",
-		"BombOoze",
-		"BombSmoke",
-		"Torch",
-		"TorchMist",
-		"Sparkler",
-		"Feaster",
-		"Lantern",
-		"Lantern_DN",
-		"Lantern_hooded"
-	);
-
 	static readonly Func<Instruction, bool>[] m_codeMatches = [
 		x => x.MatchLdarg(0),
 		x => x.MatchCall<Character>(nameof(Character.IsSwimming)),
@@ -38,16 +17,16 @@ static partial class EquipInWater
 		x => x.OpCode == OpCodes.Brfalse_S || x.OpCode == OpCodes.Brtrue_S
 	];
 
-	[ConfigValue("EquipInWater", "Allow using 1handed equipment in water")]
+	[ConfigValue("EquipInWater", "Allow using non-projectile 1handed equipment in water")]
 	static ConfigEntry<bool> m_enabled = null!;
 
 	[HarmonyILManipulator]
 	[HarmonyPatch(typeof(Player), nameof(Player.Update))]
 	[HarmonyPatch(typeof(Humanoid), nameof(Humanoid.EquipItem))]
 	[HarmonyPatch(typeof(Humanoid), nameof(Humanoid.UpdateEquipment))]
-	static void Transpile(ILContext ctx, MethodBase original)
+	static void Transpile(ILContext ctx, MethodBase original, ILLabel retLabel)
 	{
-		ctx.ApplyPatch(original, nameof(EquipInWater), static (ctx, original, cursor) => {
+		ctx.ApplyPatch(nameof(EquipInWater), original, retLabel, static (ctx, cursor, original, ret) => {
 			var methodName = original.Name;
 
 			if (!cursor.TryGotoNext(MoveType.After, m_codeMatches))
@@ -57,10 +36,10 @@ static partial class EquipInWater
 				case nameof(Player.Update):
 					PatchUpdate(ctx, cursor);
 					break;
-				case nameof(Player.EquipItem):
-					PatchEquipItem(ctx, cursor);
+				case nameof(Humanoid.EquipItem):
+					PatchEquipItem(ctx, cursor, ret);
 					break;
-				case nameof(Player.UpdateEquipment):
+				case nameof(Humanoid.UpdateEquipment):
 					PatchUpdateEquipment(ctx, cursor);
 					break;
 			}
@@ -71,8 +50,8 @@ static partial class EquipInWater
 	{
 		// Skip calls to IsSwimming/IsOnGround so ShowHandItems runs
 		// --- insert ---
-		// call () => m_enabled.Value
-		// brtrue.s IL_035b
+		// 	call EquipInWater::IsEnabled()
+		// 	brtrue.s IL_035b
 		// --- insert ---
 		// IL_034b: ldarg.0
 		// IL_034c: call instance bool Character::IsSwimming()
@@ -92,12 +71,20 @@ static partial class EquipInWater
 
 		var target = cursor.MarkLabel();
 		cursor.Index -= m_codeMatches.Length;
-		cursor.EmitBrTrue(target, () => m_enabled.Value);
+		cursor.EmitBrTrue(target, IsEnabled);
 	}
 
-	static void PatchEquipItem(ILContext ctx, ILCursor cursor)
+	static void PatchEquipItem(ILContext ctx, ILCursor cursor, ILLabel retLabel)
 	{
 		// IL_002d: ldarg.0
+		// --- insert --- here because a previous branch jumps to IL_002d, which would skip our code
+		// 	call EquipInWater::IsEnabled()
+		// 	brfalse.s IL_002e
+		// 	ldarg.1
+		// 	call EquipInWater::Check(Humanoid, ItemData)
+		// 	brfalse.s IL_004d
+		// 	br IL_004f
+		// --- insert ---
 		// IL_002e: callvirt instance bool Character::IsPlayer()
 		// IL_0033: brfalse.s IL_004f
 		// IL_0035: ldarg.0
@@ -109,29 +96,20 @@ static partial class EquipInWater
 		// IL_0045: ldarg.0
 		// IL_0046: call instance bool Character::IsOnGround()
 		// IL_004b: brtrue.s IL_004f
-		// --- insert ---
-		// call () => m_enabled.Value
-		// brfalse.s IL_004d
-		// ldarg.1
-		// call EquipInWater.CanUseInWater
-		// brtrue.s IL_004f
-		// --- insert ---
 		// IL_004d: ldc.i4.0
 		// IL_004e: ret
-		// IL_004f:
+		// IL_004f: ...
+		var disabledLabel = cursor.DefineLabel();
+		var checkFalse = cursor.MarkLabel();
+		var skipLabel = cursor.CreateLabelAt(2);
 
-		var jumpLabel = (ILLabel)cursor.Prev.Operand;
-		var skipLabel = cursor.DefineLabel();
-
-		// entire check becomes:
-		// `if (this.IsPlayer() && !this.IsDead() && base.IsSwimming() && !IsOnGround() && (!Enabled || !CanUseInWater(item)))`
+		cursor.Index -= 11;
 		cursor
-			.EmitBrFalse(skipLabel, () => m_enabled.Value)
+			.EmitBrFalse(disabledLabel, IsEnabled)
 			.Emit(OpCodes.Ldarg_1)
-			.EmitFunc(CanUseInWater)
-			.Emit(OpCodes.Brtrue_S, jumpLabel);
-
-		cursor.MarkLabel(skipLabel);
+			.EmitBrFalse(checkFalse, Check)
+			.Emit(OpCodes.Br_S, skipLabel)
+			.MarkLabel(disabledLabel);
 	}
 
 	static void PatchUpdateEquipment(ILContext ctx, ILCursor cursor)
@@ -151,19 +129,45 @@ static partial class EquipInWater
 		// IL_0021: pop
 		// --- snip ---
 		// --- insert ---
-		// ldarg.0
-		// call EquipInWater.UpdateHandItems
+		// 	ldarg.0
+		// 	call EquipInWater.UpdateHandItems
 		// --- insert ---
 		// IL_0022:
 
 		cursor
 			.RemoveRange(5)
 			.Emit(OpCodes.Ldarg_0)
-			.EmitFunc(UpdateHandItems);
+			.EmitCall(UpdateHandItems);
 	}
 
-	static bool CanUseInWater(ItemDrop.ItemData item)
-		=> !item.IsTwoHanded() && !m_blackList.Contains(item.m_dropPrefab);
+	static bool IsEnabled()
+		=> m_enabled.Value;
+
+	static bool Check(Humanoid character, ItemDrop.ItemData item)
+	{
+		if (character.IsPlayer()) {
+			// original check is fine for player
+			if (!character.IsDead() && character.IsSwimming() && !character.IsOnGround()) {
+				return CanUseInWater(item);
+			}
+		} else {
+			if (character.InLiquidSwimDepth()) {
+				return CanUseInWater(item, true);
+			}
+		}
+		return true;
+	}
+
+	internal static bool CanUseInWater(ItemDrop.ItemData item, bool isAi = false)
+	{
+		var attackType = item.m_shared.m_attack.m_attackType;
+		var itemType = item.m_shared.m_itemType;
+
+		if (!item.IsTwoHanded() && attackType != AttackType.Projectile && itemType != ItemType.Torch) {
+			return !isAi || item.m_shared.m_aiWhenSwiming;
+		}
+		return false;
+	}
 
 	static void UpdateHandItems(Humanoid character)
 	{
