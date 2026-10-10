@@ -17,8 +17,7 @@ static partial class EquipInWater
 		x => x.OpCode == OpCodes.Brfalse_S || x.OpCode == OpCodes.Brtrue_S
 	];
 
-	[ConfigValue("EquipInWater", "Allow using non-projectile 1handed equipment in water")]
-	static ConfigEntry<bool> m_enabled = null!;
+	internal static bool Enabled = true;
 
 	[HarmonyILManipulator]
 	[HarmonyPatch(typeof(Player), nameof(Player.Update))]
@@ -141,7 +140,7 @@ static partial class EquipInWater
 	}
 
 	static bool IsEnabled()
-		=> m_enabled.Value;
+		=> Enabled;
 
 	static bool Check(Humanoid character, ItemDrop.ItemData item)
 	{
@@ -171,7 +170,7 @@ static partial class EquipInWater
 
 	static void UpdateHandItems(Humanoid character)
 	{
-		if (m_enabled.Value) {
+		if (Enabled) {
 			if (UpdateItem(character, character.m_leftItem, false) || UpdateItem(character, character.m_rightItem, true)) {
 				character.SetupVisEquipment(character.m_visEquipment, false);
 				character.m_zanim.SetTrigger("equip_hip");

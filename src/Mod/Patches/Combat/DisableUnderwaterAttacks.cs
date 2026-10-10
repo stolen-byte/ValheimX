@@ -5,7 +5,11 @@ using ItemData = ItemDrop.ItemData;
 using ItemType = ItemDrop.ItemData.ItemType;
 
 // =============================================================================
-[ItemPatch(ConfigSections.Combat, "DisableUnderwaterAttacks", "Disable ranged enemy attacks when they are underwater")]
+[ItemPatch(
+	ConfigSections.Combat,
+	"UnderwaterEquipment",
+	"Allow using non-projectile, 1handed equipment, or tools in water, and disable ranged enemy attacks in water."
+)]
 sealed class DisableUnderwaterAttacks : ItemPatch<ItemData>
 {
 	static readonly ObjectSet m_extraOneHanded = new(
@@ -28,6 +32,11 @@ sealed class DisableUnderwaterAttacks : ItemPatch<ItemData>
 		}
 	}
 
+	protected override void OnInit()
+	{
+		EquipInWater.Enabled = Enabled;
+	}
+
 	protected override void Apply(ItemData item)
 	{
 		UpdateItem(item, false);
@@ -40,6 +49,8 @@ sealed class DisableUnderwaterAttacks : ItemPatch<ItemData>
 
 	protected override void OnEnabledChanged(bool enabled)
 	{
+		EquipInWater.Enabled = enabled;
+
 		// in-world spawned monsters have cloned instances, so we also need to update them
 		foreach (var ai in GameObject.FindObjectsByType<MonsterAI>(FindObjectsSortMode.None)) {
 			if (ai.m_character is not Humanoid monster)
