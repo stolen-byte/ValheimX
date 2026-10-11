@@ -64,8 +64,6 @@ static partial class DumpObjects
 		foreach (var (cat, objects) in db) {
 			var outPath = Path.Combine(basePath, cat.ToString().ToLowerInvariant() + ".txt");
 			using (var writer = new StreamWriter(outPath, false, Encoding)) {
-				objects.Sort();
-
 				foreach (var name in objects) {
 					WriteItem(writer, name);
 					++nObjects;
@@ -90,7 +88,6 @@ static partial class DumpObjects
 					writer.WriteLine("  -");
 				} else {
 					foreach (var (env, systems) in environments) {
-						systems.Sort();
 						uniqueEnvs.Add(env);
 						uniqueSys.AddRange(systems);
 
@@ -106,11 +103,11 @@ static partial class DumpObjects
 		return (biomes.Count, uniqueEnvs.Count, uniqueSys.Count);
 	}
 
-	static IReadOnlyDictionary<Biome, SortedDictionary<string, List<string>>> GetEnvironments(
+	static IReadOnlyDictionary<Biome, SortedDictionary<string, SortedList<string>>> GetEnvironments(
 		EnvMan envMan,
 		ZoneSystem zoneSys)
 	{
-		var biomes = new SortedDictionary<Biome, SortedDictionary<string, List<string>>>();
+		var biomes = new SortedDictionary<Biome, SortedDictionary<string, SortedList<string>>>();
 
 		foreach (var setup in envMan.m_biomes) {
 			var biome = biomes.GetOrAddDefault(setup.m_biome);
@@ -127,14 +124,14 @@ static partial class DumpObjects
 		return biomes;
 	}
 
-	static IReadOnlyDictionary<Category, List<string>> GetPrefabs(ObjectDB odb, ZNetScene znet)
+	static IReadOnlyDictionary<Category, SortedList<string>> GetPrefabs(ObjectDB odb, ZNetScene znet)
 	{
 		var seen = new HashSet<string>();
-		var result = new Dictionary<Category, List<string>>();
+		var result = new Dictionary<Category, SortedList<string>>();
 
 		AddEntities(znet, result, seen);
-		result.Add(Category.Recipes, GetUniqueNames(PrefabDB.Recipes, seen).ToList());
-		result.Add(Category.PieceTables, GetUniqueNames(PrefabDB.PieceTables, seen).ToList());
+		result.Add(Category.Recipes, GetUniqueNames(PrefabDB.Recipes, seen).ToSortedList());
+		result.Add(Category.PieceTables, GetUniqueNames(PrefabDB.PieceTables, seen).ToSortedList());
 
 		foreach (var obj in odb.m_itemByHash.Values.Concat(znet.m_namedPrefabs.Values)) {
 			if (!seen.Add(obj.name))
@@ -147,7 +144,7 @@ static partial class DumpObjects
 		return result;
 	}
 
-	static void AddEntities(ZNetScene znet, IDictionary<Category, List<string>> result, HashSet<string> seen)
+	static void AddEntities(ZNetScene znet, IDictionary<Category, SortedList<string>> result, HashSet<string> seen)
 	{
 		var animals = result.GetOrAddDefault(Category.Animals);
 		var monsters = result.GetOrAddDefault(Category.Monsters);

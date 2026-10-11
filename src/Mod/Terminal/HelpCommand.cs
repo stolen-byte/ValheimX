@@ -7,7 +7,7 @@ static partial class HelpCommand
 {
 	static void Execute(Terminal ctx, string? name = null)
 	{
-		var commands = new List<string>();
+		var commands = new SortedList<string>();
 		foreach (var cmd in Terminal.commands) {
 			if (!cmd.Value.ShowCommand(ctx))
 				continue;
@@ -18,7 +18,6 @@ static partial class HelpCommand
 			commands.Add($"{cmd.Key} - {cmd.Value.Description}");
 		}
 
-		commands.Sort();
 		foreach (var line in commands) {
 			ctx.AddString(line);
 		}
