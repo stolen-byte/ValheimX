@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace StolenByte.ValheimX;
 
+using Constants;
+
 // =============================================================================
 [HarmonyPatch]
 static class ExtinguishFires
@@ -9,17 +11,17 @@ static class ExtinguishFires
 	const string Light = nameof(Light);
 
 	static readonly ObjectSet m_firePlaces = new(
-		"fire_pit",
-		"fire_pit_iron",
-		"hearth",
-		"piece_groundtorch",
-		"piece_groundtorch_wood",
-		"piece_groundtorch_blue",
-		"piece_groundtorch_green",
-		"piece_brazierceiling01",
-		"piece_brazierfloor01",
-		"piece_brazierfloor02",
-		"piece_walltorch"
+		Pieces.Hammer.FirePit,
+		Pieces.Hammer.FirePitIron,
+		Pieces.Hammer.Hearth,
+		Pieces.Hammer.StandingIronTorch,
+		Pieces.Hammer.StandingWoodTorch,
+		Pieces.Hammer.StandingIronTorchBlue,
+		Pieces.Hammer.StandingIronTorchGreen,
+		Pieces.Hammer.HangingBrazier,
+		Pieces.Hammer.StandingBrazier,
+		Pieces.Hammer.StandingBrazierBlue,
+		Pieces.Hammer.Sconce
 	);
 
 	[HarmonyPatch(typeof(Fireplace), nameof(Fireplace.Interact)), HarmonyPrefix]

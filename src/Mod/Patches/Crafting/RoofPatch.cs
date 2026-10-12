@@ -1,28 +1,30 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace StolenByte.ValheimX;
 
+using Constants;
+
 // =============================================================================
 [ItemPatch(ConfigSections.Crafting, "ExtraRoofs", "Floor/Stair pieces count as roofs")]
 sealed class RoofPatch : ItemPatch<Transform>
 {
 	static readonly ObjectSet m_items = new(
-		"wood_floor",
-		"wood_floor_1x1",
-		"ashwood_floor_1x1",
-		"ashwood_floor_2x2",
-		"wood_stair",
-		"ashwood_stair",
-		"piece_dvergr_spiralstair",
-		"piece_dvergr_spiralstair_right",
-		"piece_table",
-		"piece_table_oak",
-		"piece_table_round",
-		"piece_table_runed",
-		"piece_table_runed_small",
-		"piece_blackmarble_table",
-		"piece_blackmarble_bench",
-		"dvergrprops_wood_floor",
-		"dvergrprops_wood_stair"
+		Pieces.Hammer.WoodFloor,
+		Pieces.Hammer.WoodFloor1x1,
+		Pieces.Hammer.AshwoodFloor1x1,
+		Pieces.Hammer.AshwoodFloor2x2,
+		Pieces.Hammer.WoodStairs,
+		Pieces.Hammer.AshwoodStairs,
+		Pieces.Hammer.DvergrSpiralStairs,
+		Pieces.Hammer.DvergrSpiralStairsRight,
+		Pieces.Hammer.Table,
+		Pieces.Hammer.TableOak,
+		Pieces.Hammer.TableRound,
+		Pieces.Hammer.TableRuned,
+		Pieces.Hammer.TableRunedSmall,
+		Pieces.Hammer.BlackmarbleTable,
+		Pieces.Hammer.BlackmarbleBench,
+		Pieces.Hammer.DvergrWoodFloor,
+		Pieces.Hammer.DvergrWoodStair
 	);
 
 	protected override IEnumerable<Transform> GetItems()

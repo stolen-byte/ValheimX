@@ -75,5 +75,5 @@ static class RemoveWithoutWorkbenchPatch
 
 	static bool NeedsWorkbench(Piece piece)
 		=> piece.m_craftingStation is not null &&
-				!ObjectComparer.Default.Equals(piece.m_craftingStation, Constants.Pieces.Workbench);
+				!ObjectComparer.Default.Equals(piece.m_craftingStation, Constants.Pieces.Hammer.Workbench);
 }

@@ -15,7 +15,7 @@ static class PlaceableStoneFix
 		if (!e.HasItems)
 			return;
 
-		if (PrefabDB.GetPrefab("Placeable_Stone") is { } prefab) {
+		if (PrefabDB.GetPrefab(Constants.Pickables.PlaceableStone) is { } prefab) {
 			if (prefab.GetComponent<Pickable>() is { } stone) {
 				stone.m_dontScale = true;
 			}

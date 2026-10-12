@@ -3,6 +3,7 @@ namespace StolenByte.ValheimX;
 
 using ItemType = ItemDrop.ItemData.ItemType;
 using PaintType = TerrainModifier.PaintType;
+using Constants;
 
 // =============================================================================
 [HarmonyPatch, BindConfig(ConfigSections.Crafting)]
@@ -18,17 +19,17 @@ partial class RemoveOnTerrainMod : MonoBehaviour
 	}
 
 	static readonly ObjectSet m_cultivateExclude = new(
-		"Pickable_Barley",
-		"Pickable_Barley_Wild",
-		"Pickable_Flax",
-		"Pickable_Flax_Wild",
-		"Pickable_Oat",
-		"Pickable_SeedCarrot",
-		"Pickable_SeedKale",
-		"Pickable_SeedOnion",
-		"Pickable_SeedTurnip",
-		"Pickable_Turnip",
-		"Placeable_Stone"
+		Pickables.Barley,
+		Pickables.Flax,
+		Pickables.Oat,
+		Pickables.SeedCarrot,
+		Pickables.SeedKale,
+		Pickables.SeedOnion,
+		Pickables.SeedTurnip,
+		Pickables.Turnip,
+		Pickables.PlaceableStone,
+		Pickables.WildBarley,
+		Pickables.WildFlax
 	);
 
 	[HarmonyPatch(typeof(TerrainComp), nameof(TerrainComp.InternalDoOperation)), HarmonyPostfix]
