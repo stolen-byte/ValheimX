@@ -5,6 +5,7 @@
 - Prevent `Game.isModded` flag from disabling achievements.
 - Removed 100hp cap on fall damage.
 - Allow using most 1handed equipment in water, where sensible.
+- Allow extinguishing/re-lighting fires. (keybind: Alt Place + Use)
 
 ## Combat
 
