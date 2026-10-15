@@ -5,7 +5,13 @@
 - Prevent `Game.isModded` flag from disabling achievements.
 - Removed 100hp cap on fall damage.
 - Allow using most 1handed equipment in water, where sensible.
-- Allow extinguishing/re-lighting fires. (keybind: Alt Place + Use)
+- Allow extinguishing/re-lighting fires. (keybind: Alt Place + Use).
+- When removing/destroying a bed, the player's spawn point automatically moves to the next nearest bed. (EXPERIMENTAL)
+
+  Note: spawn points are saved in `BepInEx/plugins/StolenByte.ValheimX/<character>/<world>.sp`.
+  This feature is _highly_ experimental, as it has to hook into many parts of the game code to function, also,
+  due to a limitation in the game's code, your spawn point will not be moved if a bed is destroyed while your
+  character is in another "chunk" (should only really happen in multiplayer, and rarely at that).
 
 ## Combat
 

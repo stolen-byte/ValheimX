@@ -21,6 +21,9 @@ static class Log
 	public static void Fatal(object data)
 		=> Write(LogLevel.Fatal, data);
 
+	public static void Exception(string message, Exception ex)
+		=> Write(LogLevel.Error, $"{message}\n{ex}");
+
 	public static void Error(object data)
 		=> Write(LogLevel.Error, data);
 
